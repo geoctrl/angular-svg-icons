@@ -1,4 +1,4 @@
 export declare class IconComponent {
-    id: string;
+    i: string;
     baseUrl: string;
 }

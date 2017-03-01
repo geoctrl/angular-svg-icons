@@ -10,11 +10,11 @@ import { Component, Input } from '@angular/core';
      height="24px"
      preserveAspectRatio="xMidYMin"
      viewBox="0 0 24 24">
-    <use [attr.xlink:href]="baseUrl+'#'+id" />
+    <use [attr.xlink:href]="baseUrl+'#'+i" />
 </svg>
 `
 })
 export class IconComponent {
-  @Input() id: string;
+  @Input() i: string;
   baseUrl = document.location.href;
 }
