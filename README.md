@@ -61,3 +61,18 @@ The `i` attribute is the name (id) of the icon. The above code generates the fol
 I built a Gulp task that takes in an icon json file and then produces an `svg-symbols.ts` file for you. The repo houses all the svg icons, so all you have to do is specify the list of icons you want in your json file: `["search","home","person"]`.
 
 This is pretty specific to my needs (and uses material icons), but you can fork it to create your own.
+
+### Styling
+
+I purposefully left out styles -- the generated icons have an `icon` class so you can style them however you want.
+
+    // control all aspects of the icon
+    icon {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        
+        svg {
+            fill: grey;
+        }
+    }
