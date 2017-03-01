@@ -1,5 +1,6 @@
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
+import { IconModule } from '../../index';
 
 import AppComponent from './app.component';
 import './sass/main.scss';
@@ -8,7 +9,8 @@ import './sass/main.scss';
 
 @NgModule({
   imports: [
-    BrowserModule
+    BrowserModule,
+    IconModule
   ],
   declarations: [
     AppComponent

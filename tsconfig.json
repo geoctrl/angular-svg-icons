@@ -2,6 +2,7 @@
 	"compilerOptions": {
 		"declaration": true,
 		"target": "es5",
+    "pretty": true,
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"sourceMap": false,
@@ -12,10 +13,10 @@
 		"typeRoots": [
 			"./node_modules/@types/"
 		]
-	},
+  },
 	"exclude": [
-		"node_modules",
-		"dist",
-		"dev"
+		"node_modules/*",
+		"dist/*",
+		"dev/*"
 	]
 }

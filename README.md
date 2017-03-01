@@ -64,15 +64,18 @@ This is pretty specific to my needs (and uses material icons), but you can fork 
 
 ### Styling
 
-I purposefully left out styles -- the generated icons have an `icon` class so you can style them however you want.
+I purposefully left out styles -- the generated icons have an `icon` class so you can style them however you want. Just be aware of the limitations of the `<use>` element ([A guide to SVG <use> elements](http://taye.me/blog/svg/a-guide-to-svg-use-elements/))
 
-    // control all aspects of the icon
+    // example of changing color and size
+    // remember to style the <icon> element as well
     icon {
         width: 24px;
         height: 24px;
         display: inline-block;
-        
+    
         svg {
-            fill: grey;
+            fill: #404040;
+            width: 24px;
+            height: 24px;
         }
     }

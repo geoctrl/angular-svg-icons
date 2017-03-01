@@ -1,3 +1,1 @@
-// import and export the NgModule here
-
-export * from './src/icon.module';
+export { IconModule } from './src/icon.module';
