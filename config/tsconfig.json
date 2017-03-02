@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "experimentalDecorators": true,
+    "module": "ES6",
+    "target": "ES6",
+    "lib": ["es6", "dom"],
+    "pretty": true,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "emitDecoratorMetadata": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "typeRoots": [
+      "./node_modules/@types/"
+    ]
+  },
+  "files": [
+    "../dev/icons/index.ts",
+    "../dev/icons/src/icon.component.ts",
+    "../dev/icons/src/icon.module.ts"
+  ]
+}

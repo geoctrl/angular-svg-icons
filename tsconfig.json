@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
 		"declaration": true,
-		"target": "es5",
+		"target": "es6",
     "pretty": true,
-		"module": "commonjs",
+		"module": "umd",
 		"moduleResolution": "node",
 		"sourceMap": false,
 		"emitDecoratorMetadata": true,
@@ -16,7 +16,6 @@
   },
 	"exclude": [
 		"node_modules/*",
-		"dist/*",
-		"dev/*"
+		"dist/*"
 	]
 }
