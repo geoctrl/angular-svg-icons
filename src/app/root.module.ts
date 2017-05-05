@@ -1,11 +1,10 @@
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import { IconModule } from '../../index';
 
-import AppComponent from './app.component';
 import './sass/main.scss';
+import AppComponent from './app.component';
 
-
+import { IconModule } from './icons/icon.module';
 
 @NgModule({
   imports: [
@@ -14,8 +13,6 @@ import './sass/main.scss';
   ],
   declarations: [
     AppComponent
-  ],
-  providers: [
   ],
   bootstrap: [ AppComponent ]
 })

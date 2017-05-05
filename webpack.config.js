@@ -1,132 +1,89 @@
-
-const path = require('path');
 const webpack = require('webpack');
+const path = require('path');
 
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
-const autoprefixer = require('autoprefixer');
+const LoaderOptionsPlugin = webpack.LoaderOptionsPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 const ENV = process.env.npm_lifecycle_event;
 const isTest = ENV === 'test' || ENV === 'test-watch';
 const isProd = ENV === 'build';
 
 const include = [
-	path.resolve(__dirname, 'dev')
+  path.resolve(__dirname, 'src')
 ];
-console.log(include);
 
 module.exports = function() {
 
-	let config = {};
+  let config = {};
 
-	if (isProd) {
-		config.devtool = 'source-map';
-	}
+  config.entry = isTest ? {} : {
+        polyfills: path.resolve(__dirname, 'src', 'polyfills.ts'),
+        app: path.resolve(__dirname, 'src', 'main.ts')
+      };
 
-	config.debug = !isProd || !isTest;
-	config.cache = true;
+  config.output = isTest ? {} : {
+        path: path.resolve(__dirname, 'src'),
+        filename: '[name].js'
+      };
 
-	config.entry = isTest ? {} : {
-		polyfills: path.resolve(__dirname, 'dev', 'polyfills.ts'),
-		vendors: path.resolve(__dirname, 'dev', 'vendors.ts'),
-		app: path.resolve(__dirname, 'dev', 'main.ts')
-	};
+  if (isProd) {
+    config.devtool = 'source-map';
+  }
 
-	config.output = isTest ? {} : {
-		path: path.resolve(__dirname, 'dev'),
-		filename: '[name].js'
-	};
+  config.cache = true;
 
+  config.resolve = {
+    extensions: ['.ts', '.js', '.scss', '.html']
+  };
 
-	config.resolve = {
-		cache: !isTest,
-		root: [
-			path.join( __dirname, 'dev' )
-		],
-		extensions: ['', '.ts', '.js', '.scss', '.html']
-	};
-
-	config.module = {
-		loaders: [
-			{
-				test: /\.ts$/,
-				loader: 'awesome-typescript',
-        // include
-        exclude: [/\.(spec|e2e)\.ts$/]
-			},
-			{
-				test: /.scss$/,
-				loader: 'style!css!postcss!sass',
-				include
-			},
-			{
-				test: /.html$/,
-				loader: 'raw?html-minify',
-				include
-			},
-			{
-				test: /\.svg$/,
-				loader: 'svg-inline!html-minify',
-				include
-			},
-			{
-				test: /\.json$/,
-				loader: 'json',
-				include
-			},
-
-		],
-		postLoaders: []
-	};
-
-	config['html-minify-loader'] = {
-		empty: true,
-		dom: {
-			lowerCaseAttributeNames: false,
-		}
-	};
-
-	config.plugins = [
-		new webpack.DefinePlugin({
-			'process.env': {
-				ENV: JSON.stringify(ENV)
-			}
-		})
-	];
-
-	config.postcss = [
-		autoprefixer({
-			browsers: ['last 2 version']
-		})
-	];
+  config.module = {
+    exprContextCritical: false,
+    loaders: [
+      {
+        test: /\.ts$/,
+        loader: 'awesome-typescript-loader',
+        include
+      },
+      {
+        test: /.scss$/,
+        loader: 'style-loader!css-loader!sass-loader',
+        include
+      }
+    ]
+  };
 
 
-	if (!isTest) {
-		config.plugins.push(
-				new CommonsChunkPlugin({
-					name: ['vendors', 'polyfills']
-				}),
+  config.plugins = [
+    new webpack.DefinePlugin({
+      'process.env': {
+        IS_DEV: !isProd,
+        IS_PROD: isProd
+      }
+    })
+  ];
 
-				new HtmlWebpackPlugin({
-					template: 'dev/app/index.ejs',
-					envDev: !isProd,
-					envProd: isProd
-				})
-		);
-	}
+  if (!isTest) {
+    config.plugins.push(
+        new CommonsChunkPlugin({
+          name: ['polyfills']
+        }),
 
-	config.devServer = {
-		contentBase: './dev',
-		historyApiFallback: true,
-		stats: 'minimal'
-	};
+        new HtmlWebpackPlugin({
+          template: 'src/app/index.ejs',
+          envDev: !isProd,
+          envProd: isProd
+        })
+    );
+  }
 
-	return config;
+  config.devServer = {
+    contentBase: './src',
+    historyApiFallback: true,
+    stats: 'minimal',
+    port: 8080
+  };
+
+  return config;
 }();
-
-
-// Helper functions
-function root(args) {
-	args = Array.prototype.slice.call(arguments, 0);
-	return path.join.apply(path, [__dirname].concat(args));
-}
