@@ -2,28 +2,51 @@
 
 Easily use icons in your Angular app with this component. It uses the `<use>` element to duplicate SVG's without manipulating the DOM (the browser does all the work).
 
+## Breaking Changes from v1.x.x => v2.x.x
+
+I never liked how the attribute for selecting the icon was `i`:
+
+```ts
+// v1.x.x
+<icon i="home"></icon>
+```
+
+The attribute has been changed to `name`:
+
+```ts
+// v2.x.x
+<icon name="home"></icon>
+```
+
 ## Install
 
 ```shell
 $ npm install angular2-svg-icons --save
 ```
 
-Then add it to the modules that require it:
+## Implement
 
-```js
-import { IconModule } from 'angular2-svg-icons';
+**Note:** Building an Angular library has been a pain to get the implementation just right. There's WAY to many tools to get this thing working... (`typescript`, `angular-compiler`, `rollup`, etc etc).
+
+Currently, the only way I've gotten this to work is by importing the `@Component`, rather then `@NgModule`:
+
+```ts
+import { IconComponent } from 'angular2-svg-icons';
 
 @NgModule({
-  imports: [IconModule]
+  declaration: [IconComponent],
+  exports: [IconComponent]
 })
 export class SomeModule {}
 ```
 
+I'm doing more research on why `@NgModule` isn't working. No breaking changes should occur once I get this working.
+
 ## Use
 
-    <icon i="search"></icon>
+    <icon name="search"></icon>
 
-The `i` attribute is the name (id) of the icon. The above code generates the following:
+The above code generates the following:
 
 ```html
 <svg class="icon"
@@ -35,6 +58,8 @@ The `i` attribute is the name (id) of the icon. The above code generates the fol
     <use xlink:href="baseUrl/#search" />
 </svg>
 ```
+
+The attribute `name` should match the SVG symbol `id` when you set that up.
 
 ## Symbol Requirement
 
@@ -64,13 +89,13 @@ export class RootComponent { }
 
 **NOTE:** It's recommended to hide the `<svg>` or else the entire sheet will be displayed when added to your app.
 
-### Easy svg to symbol creation
+#### Recommended: Icosystem CLI
 
-[build-svg-sheet](https://github.com/geoctrl/build-svg-sheet)
+Create SVG symbols easily with the [icosystem-cli](https://github.com/geoctrl/icosystem-cli). The CLI takes in an icon json file and then produces a module file that houses all your icons: `svg-symbols.ts`.
 
-I built a Gulp task that takes in an icon json file and then produces an `svg-symbols.ts` file for you. The repo houses all the svg icons, so all you have to do is specify the list of icons you want in your json file: `["search","home","person"]`.
+The repo houses all the svg icons, so all you have to do is specify the list of icons you want in your json file: `["search","home","person"]`.
 
-This is pretty specific to my needs (and uses material icons), but you can fork it to create your own.
+This is pretty specific to my needs (and currently only houses material design icons), but I'll be adding more open-source icon libraries soon. Feedback welcome.
 
 ### Styling
 

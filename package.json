@@ -1,6 +1,6 @@
 {
   "name": "angular2-svg-icons",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "dist/bundles/index.umd.js",
 	"module": "dist/index.js",
