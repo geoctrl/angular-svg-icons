@@ -11,48 +11,47 @@ const isTest = ENV === 'test' || ENV === 'test-watch';
 const isProd = ENV === 'build';
 
 const include = [
-  path.resolve(__dirname, 'src')
+	path.resolve(__dirname, 'dev')
 ];
 
 module.exports = function() {
 
-  let config = {};
+	let config = {};
 
-  config.entry = isTest ? {} : {
-        polyfills: path.resolve(__dirname, 'src', 'polyfills.ts'),
-        app: path.resolve(__dirname, 'src', 'main.ts')
-      };
+	config.entry = {
+		polyfills: path.resolve(__dirname, 'dev', 'polyfills.ts'),
+		app: path.resolve(__dirname, 'dev', 'main.ts')
+	};
 
-  config.output = isTest ? {} : {
-        path: path.resolve(__dirname, 'src'),
-        filename: '[name].js'
-      };
+	config.output = {
+		path: path.resolve(__dirname, 'dev'),
+		filename: '[name].js'
+	};
 
-  if (isProd) {
-    config.devtool = 'source-map';
-  }
+	if (isProd) {
+		config.devtool = 'source-map';
+	}
 
-  config.cache = true;
+	config.cache = true;
 
-  config.resolve = {
-    extensions: ['.ts', '.js', '.scss', '.html']
-  };
+	config.resolve = {
+ 		extensions: ['.ts', '.js', '.scss', '.html']
+	};
 
-  config.module = {
-    exprContextCritical: false,
-    loaders: [
-      {
-        test: /\.ts$/,
-        loader: 'awesome-typescript-loader',
-        include
-      },
-      {
-        test: /.scss$/,
-        loader: 'style-loader!css-loader!sass-loader',
-        include
-      }
-    ]
-  };
+	config.module = {
+		exprContextCritical: false,
+		loaders: [
+			{
+				test: /\.ts$/,
+				loader: 'awesome-typescript-loader',
+			},
+			{
+				test: /.scss$/,
+				loader: 'style-loader!css-loader!sass-loader',
+				include
+			}
+		]
+	};
 
 
   config.plugins = [
@@ -71,19 +70,19 @@ module.exports = function() {
         }),
 
         new HtmlWebpackPlugin({
-          template: 'src/app/index.ejs',
+          template: 'dev/app/index.ejs',
           envDev: !isProd,
           envProd: isProd
         })
     );
   }
 
-  config.devServer = {
-    contentBase: './src',
-    historyApiFallback: true,
-    stats: 'minimal',
-    port: 8080
-  };
+	config.devServer = {
+		contentBase: './dev',
+		historyApiFallback: true,
+		stats: 'minimal',
+		port: 8080
+	};
 
-  return config;
+	return config;
 }();

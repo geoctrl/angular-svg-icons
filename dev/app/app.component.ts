@@ -6,9 +6,9 @@ import { svgSymbols } from './svg-symbols';
   template: `
 ${svgSymbols}
 <div>app!</div>
-<icon i="language-typescript"></icon>
-<icon i="castle"></icon>
-<icon i="account"></icon>
+<icon name="language-typescript"></icon>
+<icon name="castle"></icon>
+<icon name="account"></icon>
 `,
 
 })
